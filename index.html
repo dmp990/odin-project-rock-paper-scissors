@@ -4,6 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rock Paper Scissors Project</title>
+  </head>
+  <body>
+    <button class="rock btn">Rock</button>
+    <button class="paper btn">Paper</button>
+    <button class="scissors btn">Scissors</button>
+
+    <div class="result-display"></div>
+
+    <div class="score"></div>
+
     <script>
       /*
        Rock beats scissors, scissors beat paper, and paper beats rock.
@@ -19,14 +29,49 @@
           (playerSelection === "rock" && computerSelection === "scissors")
         ) {
           return `You win! ${playerSelection} beats ${computerSelection}`;
-        } else if (choices.indexOf(playerSelection) === choices.indexOf(computerSelection)) {
-            return `Drawn! ${playerSelection} cannot beat nor be beaten by ${computerSelection}`;
-        }
-         else {
+        } else if (
+          choices.indexOf(playerSelection) ===
+          choices.indexOf(computerSelection)
+        ) {
+          return `Drawn! ${playerSelection} cannot beat nor be beaten by ${computerSelection}`;
+        } else {
           return `You lose! ${computerSelection} beats ${playerSelection}`;
         }
       }
 
+      let buttons = document.querySelectorAll(".btn");
+      let resultElement = document.querySelector(".result-display");
+      let scoreElement = document.querySelector(".score");
+
+      let scoreMe = 0;
+      let scoreComp = 0;
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          let outcome = playOneRound(
+            button.innerText.toLowerCase(),
+            getComputerChoice()
+          );
+          resultElement.innerHTML = `<p>Result of this turn: ${outcome}</p>`;
+          if (outcome[4] === "w") {
+            scoreMe++;
+          } else if (outcome[4] === "l") {
+            scoreComp++;
+          }
+
+          scoreElement.innerHTML = `<p>Score: You ${scoreMe} - ${scoreComp} Computer`;
+
+          if (scoreComp == 5 || scoreMe == 5) {
+            alert(`${scoreComp == 5 ? "Computer is" : "You are"} the winner!`);
+            scoreComp = 0;
+            scoreMe = 0;
+            resultElement.innerHTML = "";
+            scoreElement.innerHTML = "";
+          }
+        });
+      });
+
+      /*
       for (let i = 0; i < 5; i++) {
         let playerSelection = prompt("Choose: ").toLowerCase();
         if (choices.indexOf(playerSelection) === -1) {
@@ -35,8 +80,7 @@
         }
         let outcome = playOneRound(playerSelection, getComputerChoice());
         console.log(outcome);
-      }
+      }*/
     </script>
-  </head>
-  <body></body>
+  </body>
 </html>
