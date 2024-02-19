@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper Scissors Project</title>
+    <script>
+      /*
+       Rock beats scissors, scissors beat paper, and paper beats rock.
+       */
+      let choices = ["rock", "scissors", "paper"];
+      function getComputerChoice() {
+        return choices[Math.floor(Math.random() * 3)];
+      }
+
+      function playOneRound(playerSelection, computerSelection) {
+        if (
+          choices.indexOf(playerSelection) < computerSelection ||
+          (playerSelection === "rock" && computerSelection === "scissors")
+        ) {
+          return `You win! ${playerSelection} beats ${computerSelection}`;
+        } else if (choices.indexOf(playerSelection) === choices.indexOf(computerSelection)) {
+            return `Drawn! ${playerSelection} cannot beat not be beaten by ${computerSelection}`;
+        }
+         else {
+          return `You lose! ${computerSelection} beats ${playerSelection}`;
+        }
+      }
+
+      for (let i = 0; i < 5; i++) {
+        let playerSelection = prompt("Choose: ").toLowerCase();
+        if (choices.indexOf(playerSelection) === -1) {
+            console.log("Invalid input. Refresh to play again!");
+            break;
+        }
+        let outcome = playOneRound(playerSelection, getComputerChoice());
+        console.log(outcome);
+      }
+    </script>
+  </head>
+  <body></body>
+</html>
